@@ -4,6 +4,10 @@ This project hosts the source for https://davidmcgill.tech.
 
 Recent updates removed leftover merge conflict markers that appeared on the live homepage. Pull the latest version to ensure they are gone.
 
+## Accessibility
+
+Accessibility standards, audit scope, baseline backlog, and sign-off steps are documented in [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
+
 ## Custom domain configuration
 
 If HTTPS fails with a `NET::ERR_CERT_COMMON_NAME_INVALID` error, verify the following:

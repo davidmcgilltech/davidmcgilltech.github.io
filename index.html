@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>David McGill Technologies</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65945589-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -16,31 +15,59 @@
   <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="container">
-    <h1>Welcome to McGill Technologies</h1>
-    <a href="pics.html"><img src="images/dam-bw - small.jpg" alt="David McGill"></a>
-    <h4>David McGill - Owner</h4>
-    <p>Specializing in freelance and consulting opportunities for local and national small businesses including restaurants, non-profits, and insurance companies.</p>
-    <a href="estimate/" class="whatsapp-button" style="background-color: #7B68EE;">
-      🧹 Carpet Cleaning Estimate
-    </a>
-    <a href="https://wa.me/14056285297" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
-      📱 Contact via WhatsApp
-    </a>
-    <p>dmcgill50 at gmail dot com</p>
+    <header>
+      <h1>Welcome to McGill Technologies</h1>
+      <nav class="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="estimate/">Estimate</a></li>
+          <li><a href="pics.html">Photos</a></li>
+          <li><a href="blog/">Blog</a></li>
+          <li><a href="resume/">Resume</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <div id="paypal-button"></div>
+    <main id="main-content">
+      <a href="pics.html" aria-label="View David McGill photos">
+        <img src="images/dam-bw - small.jpg" alt="Portrait of David McGill">
+      </a>
+      <h2>David McGill - Owner</h2>
+      <p>Specializing in freelance and consulting opportunities for local and national small businesses including restaurants, non-profits, and insurance companies.</p>
+      <p>
+        <a href="estimate/" class="whatsapp-button" style="background-color: #7B68EE;">🧹 Carpet Cleaning Estimate</a>
+      </p>
+      <p>
+        <a href="https://wa.me/14056285297" class="whatsapp-button" target="_blank" rel="noopener noreferrer" aria-label="Contact McGill Technologies on WhatsApp">📱 Contact via WhatsApp</a>
+      </p>
+      <p><a href="mailto:dmcgill50@gmail.com">dmcgill50@gmail.com</a></p>
+
+      <section aria-labelledby="paypal-support-heading">
+        <h2 id="paypal-support-heading">Support</h2>
+        <p>If the payment widget does not load, contact us by email for payment options.</p>
+        <div id="paypal-button" role="region" aria-label="PayPal payment button"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; McGill Technologies</p>
+    </footer>
   </div>
 
-  <!-- Drip -->
-  <script type="text/javascript">
+  <noscript>
+    <p>This website works best with JavaScript enabled. Contact us at <a href="mailto:dmcgill50@gmail.com">dmcgill50@gmail.com</a> if any interactive feature is unavailable.</p>
+  </noscript>
+
+  <script>
     var _dcq = _dcq || [];
     var _dcs = _dcs || {};
     _dcs.account = '1380181';
 
     (function() {
       var dc = document.createElement('script');
-      dc.type = 'text/javascript'; dc.async = true;
+      dc.type = 'text/javascript';
+      dc.async = true;
       dc.src = '//tag.getdrip.com/1380181.js';
       var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(dc, s);

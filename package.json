@@ -2,7 +2,7 @@
   "name": "dmcgill50-website",
   "version": "1.0.0",
   "scripts": {
-    "test": "node tests/check_conflicts.js"
+    "test": "node tests/check_conflicts.js && node tests/check_accessibility.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1"

@@ -3,7 +3,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #E6E6FA;
-    color: #000;
+    color: #111;
+    line-height: 1.5;
 }
 
 .container {
@@ -16,6 +17,40 @@ body {
 img {
     max-width: 100%;
     height: auto;
+}
+
+a {
+    color: #2f2aa4;
+}
+
+a:hover {
+    color: #1e1a78;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    display: inline-block;
+    background: #fff;
+    border: 2px solid #2f2aa4;
+}
+
+:focus-visible {
+    outline: 3px solid #2f2aa4;
+    outline-offset: 2px;
 }
 
 .sr-only {
@@ -35,6 +70,25 @@ img {
     direction: rtl;
 }
 
+.site-nav {
+    margin-bottom: 1rem;
+}
+
+.site-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.site-nav a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .whatsapp-button {
     display: inline-block;
     background-color: #25D366;
@@ -47,7 +101,8 @@ img {
     transition: background-color 0.3s ease;
 }
 
-.whatsapp-button:hover {
+.whatsapp-button:hover,
+.whatsapp-button:focus-visible {
     background-color: #20BD5A;
     text-decoration: none;
     color: white;
