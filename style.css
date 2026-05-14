@@ -107,3 +107,8 @@ a:hover {
     text-decoration: none;
     color: white;
 }
+
+.inline-auth-input {
+    display: inline;
+    width: auto;
+}
