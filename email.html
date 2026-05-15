@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  Derived from Firebase quickstart-js/email-password sample.
+  Copyright 2016 Google LLC.
+  Licensed under the Apache License, Version 2.0.
+-->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -22,12 +27,28 @@
     firebase.initializeApp(config);
 
     function announce(message, isError) {
-      var announcer = document.getElementById('auth-announcements');
-      if (!announcer) {
+      var statusAnnouncer = document.getElementById('auth-announcements');
+      var errorAnnouncer = document.getElementById('auth-errors');
+      if (!statusAnnouncer && !errorAnnouncer) {
         return;
       }
-      announcer.textContent = message;
-      announcer.setAttribute('data-state', isError ? 'error' : 'ok');
+      if (isError) {
+        if (statusAnnouncer) {
+          statusAnnouncer.textContent = '';
+        }
+        if (errorAnnouncer) {
+          errorAnnouncer.textContent = message;
+          errorAnnouncer.setAttribute('data-state', 'error');
+        }
+      } else {
+        if (errorAnnouncer) {
+          errorAnnouncer.textContent = '';
+        }
+        if (statusAnnouncer) {
+          statusAnnouncer.textContent = message;
+          statusAnnouncer.setAttribute('data-state', 'ok');
+        }
+      }
     }
 
     function setFieldError(fieldId, message) {
@@ -44,7 +65,9 @@
     }
 
     function toggleSignIn() {
+      var signInButton = document.getElementById('quickstart-sign-in');
       if (firebase.auth().currentUser) {
+        signInButton.disabled = true;
         firebase.auth().signOut();
       } else {
         var email = document.getElementById('email').value;
@@ -62,16 +85,16 @@
         setFieldError('email', '');
         setFieldError('password', '');
 
+        signInButton.disabled = true;
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
           if (error.code === 'auth/wrong-password') {
             announce('Wrong password.', true);
           } else {
             announce(error.message, true);
           }
-          document.getElementById('quickstart-sign-in').disabled = false;
+          signInButton.disabled = false;
         });
       }
-      document.getElementById('quickstart-sign-in').disabled = true;
     }
 
     function handleSignUp() {
@@ -162,6 +185,7 @@
     <main id="main-content">
       <p id="auth-help">Enter an email and password to sign in to an existing account or sign up for a new account.</p>
       <div aria-live="polite" aria-atomic="true" id="auth-announcements" role="status"></div>
+      <div aria-live="assertive" aria-atomic="true" id="auth-errors" role="alert"></div>
 
       <div class="form-group">
         <label for="email">Email address</label>
@@ -177,7 +201,7 @@
         <button type="button" disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign in</button>
         <button type="button" class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign up</button>
         <button type="button" class="mdl-button mdl-js-button mdl-button--raised" disabled id="quickstart-verify-email" name="verify-email">Send email verification</button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Send password reset email</button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="password-reset">Send password reset email</button>
       </p>
 
       <section class="quickstart-user-details-container" aria-labelledby="auth-status-heading">
