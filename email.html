@@ -68,7 +68,10 @@
       var signInButton = document.getElementById('quickstart-sign-in');
       if (firebase.auth().currentUser) {
         signInButton.disabled = true;
-        firebase.auth().signOut();
+        firebase.auth().signOut().catch(function(error) {
+          announce(error.message, true);
+          signInButton.disabled = false;
+        });
       } else {
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
