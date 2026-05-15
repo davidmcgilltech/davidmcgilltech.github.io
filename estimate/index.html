@@ -22,7 +22,7 @@
     }
     .page-header p {
       margin: 0;
-      color: #666;
+      color: #333;
     }
     .estimator-layout {
       display: flex;
@@ -49,13 +49,16 @@
       margin-bottom: 0.25rem;
       font-size: 0.9rem;
     }
-    .form-group input {
+    .form-group input,
+    gmp-place-autocomplete {
       width: 100%;
       padding: 0.5rem;
       font-size: 1rem;
-      border: 1px solid #ccc;
+      border: 1px solid #666;
       border-radius: 4px;
       box-sizing: border-box;
+      background: #fff;
+      color: #111;
     }
     .form-row {
       display: flex;
@@ -83,7 +86,8 @@
       margin-top: 0.75rem;
       transition: background-color 0.3s ease;
     }
-    .calculate-btn:hover {
+    .calculate-btn:hover,
+    .calculate-btn:focus-visible {
       background-color: #6A5ACD;
     }
     .calculate-btn:disabled {
@@ -109,6 +113,8 @@
       justify-content: space-between;
       padding: 0.5rem 0;
       border-bottom: 1px solid #eee;
+      gap: 1rem;
+      text-align: left;
     }
     .result-row:last-child {
       border-bottom: none;
@@ -130,25 +136,31 @@
     .back-link {
       display: inline-block;
       margin-bottom: 0.5rem;
-      color: #7B68EE;
+      color: #2f2aa4;
       text-decoration: none;
     }
-    .back-link:hover {
+    .back-link:hover,
+    .back-link:focus-visible {
       text-decoration: underline;
     }
     .error-message {
-      color: #d32f2f;
+      color: #8b0000;
       background-color: #ffebee;
       padding: 0.75rem;
       border-radius: 4px;
       margin-top: 0.5rem;
       display: none;
+      border: 1px solid #8b0000;
     }
     .error-message.visible {
       display: block;
     }
+    .field-help {
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      color: #333;
+    }
 
-    /* Desktop layout - 768px and up */
     @media (min-width: 768px) {
       .estimator-layout {
         flex-direction: row;
@@ -179,7 +191,6 @@
       }
     }
 
-    /* Larger desktop */
     @media (min-width: 1024px) {
       .container {
         max-width: 1100px;
@@ -188,83 +199,98 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <noscript>
+    <p>This estimator needs JavaScript for calculation and maps integration. Contact <a href="mailto:dmcgill50@gmail.com">dmcgill50@gmail.com</a> for a manual estimate.</p>
+  </noscript>
   <div class="container">
-    <a href="../" class="back-link">&larr; Back to Home</a>
-    <div class="page-header">
-      <h1>Carpet Cleaning Estimate</h1>
-      <p>Get an instant estimate for your carpet cleaning service</p>
-    </div>
+    <header>
+      <a href="../" class="back-link">&larr; Back to Home</a>
+      <div class="page-header">
+        <h1>Carpet Cleaning Estimate</h1>
+        <p>Get an instant estimate for your carpet cleaning service.</p>
+      </div>
+    </header>
 
-    <div class="estimator-layout">
-      <div class="estimator-form">
-        <div class="form-columns">
-          <div class="form-section">
-            <div class="section-title">Customer Location</div>
-            <div class="form-group">
-              <label for="customer-address">Customer Address</label>
-              <gmp-place-autocomplete id="customer-address" placeholder="Enter customer address" style="width: 100%; padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"></gmp-place-autocomplete>
-            </div>
-            <div class="form-group">
-              <label for="square-footage">Home Square Footage</label>
-              <input type="number" id="square-footage" placeholder="e.g., 1500" min="0">
-            </div>
-
-            <div class="section-title">Travel Costs</div>
-            <div class="form-row">
+    <main id="main-content">
+      <p id="form-instructions">Enter your home details, then select Calculate Estimate. Required fields are marked below.</p>
+      <div class="estimator-layout">
+        <form class="estimator-form" id="estimate-form" novalidate aria-describedby="form-instructions">
+          <div class="form-columns">
+            <section class="form-section" aria-labelledby="customer-location-heading">
+              <h2 class="section-title" id="customer-location-heading">Customer Location</h2>
               <div class="form-group">
-                <label for="gas-price">Gas ($/gal)</label>
-                <input type="number" id="gas-price" value="3.00" step="0.01" min="0">
+                <label for="customer-address" id="customer-address-label">Customer Address</label>
+                <gmp-place-autocomplete id="customer-address" placeholder="Enter customer address" aria-labelledby="customer-address-label" aria-describedby="address-help"></gmp-place-autocomplete>
+                <p class="field-help" id="address-help">Start typing to search for an address. If autocomplete is unavailable, continue by entering all other fields.</p>
               </div>
               <div class="form-group">
-                <label for="van-mpg">Van MPG</label>
-                <input type="number" id="van-mpg" value="15" step="0.1" min="1">
+                <label for="square-footage">Home Square Footage</label>
+                <input type="number" id="square-footage" placeholder="e.g., 1500" min="1" required aria-describedby="square-footage-help">
+                <p class="field-help" id="square-footage-help">Enter total square footage as a positive number.</p>
               </div>
-            </div>
-            <div id="travel-info" class="travel-info" style="display: none;">
-              <strong>Travel:</strong> <span id="travel-details"></span>
-            </div>
+
+              <h2 class="section-title" id="travel-cost-heading">Travel Costs</h2>
+              <div class="form-row" aria-labelledby="travel-cost-heading">
+                <div class="form-group">
+                  <label for="gas-price">Gas price</label>
+                  <input type="number" id="gas-price" value="3.00" step="0.01" min="0" aria-describedby="gas-price-help">
+                  <p class="field-help" id="gas-price-help">Enter the gas price in USD per gallon.</p>
+                </div>
+                <div class="form-group">
+                  <label for="van-mpg">Van MPG</label>
+                  <input type="number" id="van-mpg" value="15" step="0.1" min="1">
+                </div>
+              </div>
+              <div id="travel-info" class="travel-info" style="display: none;" role="status" aria-live="polite" aria-atomic="true">
+                <strong>Travel:</strong> <span id="travel-details"></span>
+              </div>
+            </section>
+
+            <section class="form-section" aria-labelledby="room-details-heading">
+              <h2 class="section-title" id="room-details-heading">Room Details</h2>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="num-rooms">Rooms</label>
+                  <input type="number" id="num-rooms" value="0" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="num-stairs">Stairs</label>
+                  <input type="number" id="num-stairs" value="0" min="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="num-hallways">Hallways/Entries</label>
+                  <input type="number" id="num-hallways" value="0" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="num-dining">Dining/Dens</label>
+                  <input type="number" id="num-dining" value="0" min="0">
+                </div>
+              </div>
+            </section>
           </div>
 
-          <div class="form-section">
-            <div class="section-title">Room Details</div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="num-rooms">Rooms</label>
-                <input type="number" id="num-rooms" value="0" min="0">
-              </div>
-              <div class="form-group">
-                <label for="num-stairs">Stairs</label>
-                <input type="number" id="num-stairs" value="0" min="0">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="num-hallways">Hallways/Entries</label>
-                <input type="number" id="num-hallways" value="0" min="0">
-              </div>
-              <div class="form-group">
-                <label for="num-dining">Dining/Dens</label>
-                <input type="number" id="num-dining" value="0" min="0">
-              </div>
-            </div>
-          </div>
-        </div>
+          <button type="submit" class="calculate-btn" id="calculate-btn">Calculate Estimate</button>
+          <div id="error-message" class="error-message" role="alert" aria-live="assertive" aria-atomic="true" tabindex="-1"></div>
+        </form>
 
-        <button type="button" class="calculate-btn" id="calculate-btn">Calculate Estimate</button>
-        <div id="error-message" class="error-message"></div>
+        <section class="results-panel" aria-labelledby="estimate-breakdown-heading">
+          <section id="results" class="results" aria-live="polite" aria-atomic="true" tabindex="-1" aria-labelledby="estimate-breakdown-heading">
+            <h2 id="estimate-breakdown-heading" style="margin-top: 0; text-align: center;">Estimate Breakdown</h2>
+            <div id="results-content"></div>
+          </section>
+        </section>
       </div>
+    </main>
 
-      <div class="results-panel">
-        <div id="results" class="results">
-          <h3 style="margin-top: 0; text-align: center;">Estimate Breakdown</h3>
-          <div id="results-content"></div>
-        </div>
-      </div>
-    </div>
+    <footer>
+      <p>Need help? <a href="mailto:dmcgill50@gmail.com">Email McGill Technologies</a>.</p>
+    </footer>
   </div>
 
   <script>
-    // Configuration
     const CONFIG = {
       businessAddress: '2202 South 11th Street, Chickasha, OK 73018',
       pricing: {
@@ -276,14 +302,15 @@
       }
     };
 
-    // State
     let travelData = null;
 
-    // Initialize Google Maps
     async function initAutocomplete() {
       try {
         await customElements.whenDefined('gmp-place-autocomplete');
         const placeAutocomplete = document.getElementById('customer-address');
+        if (!placeAutocomplete) {
+          return;
+        }
 
         placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
           const place = placePrediction.toPlace();
@@ -297,7 +324,6 @@
       }
     }
 
-    // Calculate travel distance using Distance Matrix API
     function calculateTravelDistance(destination) {
       const service = new google.maps.DistanceMatrixService();
 
@@ -311,13 +337,13 @@
           const element = response.rows[0].elements[0];
           travelData = {
             distance: element.distance.text,
-            distanceMiles: element.distance.value / 1609.34, // Convert meters to miles
+            distanceMiles: element.distance.value / 1609.34,
             duration: element.duration.text
           };
 
           document.getElementById('travel-info').style.display = 'block';
-          document.getElementById('travel-details').innerHTML =
-            `Distance: ${travelData.distance} | Estimated travel time: ${travelData.duration}`;
+          document.getElementById('travel-details').textContent =
+            'Distance: ' + travelData.distance + ' | Estimated travel time: ' + travelData.duration;
         } else {
           travelData = null;
           document.getElementById('travel-info').style.display = 'none';
@@ -326,36 +352,35 @@
       });
     }
 
-    // Calculate the estimate
     function calculateEstimate() {
       hideError();
 
-      const squareFootage = parseFloat(document.getElementById('square-footage').value) || 0;
+      const squareFootageInput = document.getElementById('square-footage');
+      const squareFootage = parseFloat(squareFootageInput.value) || 0;
       const gasPrice = parseFloat(document.getElementById('gas-price').value) || 0;
       const vanMpg = parseFloat(document.getElementById('van-mpg').value) || 15;
-      const numRooms = parseInt(document.getElementById('num-rooms').value) || 0;
-      const numStairs = parseInt(document.getElementById('num-stairs').value) || 0;
-      const numHallways = parseInt(document.getElementById('num-hallways').value) || 0;
-      const numDining = parseInt(document.getElementById('num-dining').value) || 0;
+      const numRooms = parseInt(document.getElementById('num-rooms').value, 10) || 0;
+      const numStairs = parseInt(document.getElementById('num-stairs').value, 10) || 0;
+      const numHallways = parseInt(document.getElementById('num-hallways').value, 10) || 0;
+      const numDining = parseInt(document.getElementById('num-dining').value, 10) || 0;
 
-      // Validation
       if (squareFootage <= 0) {
+        squareFootageInput.setAttribute('aria-invalid', 'true');
         showError('Please enter the home square footage.');
         return;
       }
+      squareFootageInput.removeAttribute('aria-invalid');
 
-      // Calculate costs
       const sqftCost = squareFootage * CONFIG.pricing.perSquareFoot;
       const roomsCost = numRooms * CONFIG.pricing.perRoom;
       const stairsCost = numStairs * CONFIG.pricing.perStair;
       const hallwaysCost = numHallways * CONFIG.pricing.perHallway;
       const diningCost = numDining * CONFIG.pricing.perDiningRoom;
 
-      // Calculate travel cost (round trip)
       let travelCost = 0;
       let travelMiles = 0;
       if (travelData && travelData.distanceMiles) {
-        travelMiles = travelData.distanceMiles * 2; // Round trip
+        travelMiles = travelData.distanceMiles * 2;
         const gallonsNeeded = travelMiles / vanMpg;
         travelCost = gallonsNeeded * gasPrice;
       }
@@ -363,63 +388,52 @@
       const cleaningSubtotal = sqftCost + roomsCost + stairsCost + hallwaysCost + diningCost;
       const total = cleaningSubtotal + travelCost;
 
-      // Display results
       let resultsHTML = '';
-
-      resultsHTML += `<div class="result-row"><span>Square Footage (${squareFootage} sq ft @ $${CONFIG.pricing.perSquareFoot}/sq ft)</span><span>$${sqftCost.toFixed(2)}</span></div>`;
+      resultsHTML += '<div class="result-row"><span>Square Footage (' + squareFootage + ' sq ft @ $' + CONFIG.pricing.perSquareFoot + '/sq ft)</span><span>$' + sqftCost.toFixed(2) + '</span></div>';
 
       if (numRooms > 0) {
-        resultsHTML += `<div class="result-row"><span>Rooms (${numRooms} @ $${CONFIG.pricing.perRoom}/room)</span><span>$${roomsCost.toFixed(2)}</span></div>`;
+        resultsHTML += '<div class="result-row"><span>Rooms (' + numRooms + ' @ $' + CONFIG.pricing.perRoom + '/room)</span><span>$' + roomsCost.toFixed(2) + '</span></div>';
       }
-
       if (numStairs > 0) {
-        resultsHTML += `<div class="result-row"><span>Stairs (${numStairs} @ $${CONFIG.pricing.perStair}/stair)</span><span>$${stairsCost.toFixed(2)}</span></div>`;
+        resultsHTML += '<div class="result-row"><span>Stairs (' + numStairs + ' @ $' + CONFIG.pricing.perStair + '/stair)</span><span>$' + stairsCost.toFixed(2) + '</span></div>';
       }
-
       if (numHallways > 0) {
-        resultsHTML += `<div class="result-row"><span>Hallways/Entry Ways (${numHallways} @ $${CONFIG.pricing.perHallway}/area)</span><span>$${hallwaysCost.toFixed(2)}</span></div>`;
+        resultsHTML += '<div class="result-row"><span>Hallways/Entry Ways (' + numHallways + ' @ $' + CONFIG.pricing.perHallway + '/area)</span><span>$' + hallwaysCost.toFixed(2) + '</span></div>';
       }
-
       if (numDining > 0) {
-        resultsHTML += `<div class="result-row"><span>Dining Rooms/Dens (${numDining} @ $${CONFIG.pricing.perDiningRoom}/room)</span><span>$${diningCost.toFixed(2)}</span></div>`;
+        resultsHTML += '<div class="result-row"><span>Dining Rooms/Dens (' + numDining + ' @ $' + CONFIG.pricing.perDiningRoom + '/room)</span><span>$' + diningCost.toFixed(2) + '</span></div>';
       }
-
       if (travelCost > 0) {
-        resultsHTML += `<div class="result-row"><span>Travel Cost (${travelMiles.toFixed(1)} miles round trip)</span><span>$${travelCost.toFixed(2)}</span></div>`;
+        resultsHTML += '<div class="result-row"><span>Travel Cost (' + travelMiles.toFixed(1) + ' miles round trip)</span><span>$' + travelCost.toFixed(2) + '</span></div>';
       }
-
-      resultsHTML += `<div class="result-row total"><span>Total Estimate</span><span>$${total.toFixed(2)}</span></div>`;
+      resultsHTML += '<div class="result-row total"><span>Total Estimate</span><span>$' + total.toFixed(2) + '</span></div>';
 
       document.getElementById('results-content').innerHTML = resultsHTML;
-      document.getElementById('results').classList.add('visible');
+      const resultsSection = document.getElementById('results');
+      resultsSection.classList.add('visible');
+      resultsSection.focus();
     }
 
     function showError(message) {
       const errorEl = document.getElementById('error-message');
       errorEl.textContent = message;
       errorEl.classList.add('visible');
+      errorEl.focus();
     }
 
     function hideError() {
-      document.getElementById('error-message').classList.remove('visible');
+      const errorEl = document.getElementById('error-message');
+      errorEl.classList.remove('visible');
+      errorEl.textContent = '';
     }
 
-    // Event listeners
-    document.getElementById('calculate-btn').addEventListener('click', calculateEstimate);
-
-    // Allow Enter key to trigger calculation
-    document.querySelectorAll('input').forEach(input => {
-      input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          calculateEstimate();
-        }
-      });
+    document.getElementById('estimate-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      calculateEstimate();
     });
+
   </script>
 
-  <!-- Google Maps API -->
-  <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFNBogn828ajFeVBQ7sNF6erHTsLbw1mI&libraries=places&loading=async&callback=initAutocomplete">
-  </script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFNBogn828ajFeVBQ7sNF6erHTsLbw1mI&libraries=places&loading=async&callback=initAutocomplete"></script>
 </body>
 </html>
