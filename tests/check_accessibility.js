@@ -19,7 +19,7 @@ function ensure(condition, message) {
 }
 
 function hasDoctype(html) {
-  return /<!doctype html>/i.test(html);
+  return /^\s*<!doctype\s+html\s*>/i.test(html);
 }
 
 function hasLang(html) {
