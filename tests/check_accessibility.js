@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const assert = require('assert');
 
 const pages = [
@@ -11,7 +12,7 @@ const pages = [
 ];
 
 function read(filePath) {
-  return fs.readFileSync(filePath, 'utf8');
+  return fs.readFileSync(path.join(__dirname, '..', filePath), 'utf8');
 }
 
 function ensure(condition, message) {
