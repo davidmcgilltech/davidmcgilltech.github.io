@@ -44,11 +44,31 @@ function allImagesHaveAlt(html) {
 }
 
 function allInputsHaveLabels(html) {
-  const inputs = [...html.matchAll(/<input\b[^>]*id\s*=\s*['"]([^'"]+)['"][^>]*>/gi)];
+  const inputs = [...html.matchAll(/<input\b[^>]*>/gi)];
   return inputs.every((match) => {
-    const id = match[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const labelRegex = new RegExp(`<label[^>]*for\\s*=\\s*['\"]${id}['\"][^>]*>`, 'i');
-    return labelRegex.test(html);
+    const inputTag = match[0];
+
+    if (/\baria-label\s*=\s*['"][^'"]+['"]/i.test(inputTag) ||
+        /\baria-labelledby\s*=\s*['"][^'"]+['"]/i.test(inputTag)) {
+      return true;
+    }
+
+    const idMatch = inputTag.match(/\bid\s*=\s*['"]([^'"]+)['"]/i);
+    if (idMatch) {
+      const id = idMatch[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const labelRegex = new RegExp(`<label[^>]*for\\s*=\\s*['\"]${id}['\"][^>]*>`, 'i');
+      if (labelRegex.test(html)) {
+        return true;
+      }
+    }
+
+    const inputIndex = match.index;
+    const beforeInput = html.slice(0, inputIndex);
+    const afterInput = html.slice(inputIndex + inputTag.length);
+    const lastOpenLabel = beforeInput.toLowerCase().lastIndexOf('<label');
+    const lastCloseLabel = beforeInput.toLowerCase().lastIndexOf('</label>');
+
+    return lastOpenLabel > lastCloseLabel && /<\/label>/i.test(afterInput);
   });
 }
 
