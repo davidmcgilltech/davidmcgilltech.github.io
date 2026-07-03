@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ledgr - Connecting your account...</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #f9fafb;
+    color: #374151;
+  }
+  .msg { text-align: center; }
+  .msg p { font-size: 14px; color: #6b7280; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="msg">
+  <strong>Connecting your account...</strong>
+  <p>Finishing authorization with your bank. This window will close shortly.</p>
+</div>
+<!-- SRI hash omitted: Plaid rotates link-initialize.js on every deploy;
+     a static integrity hash would break on their next release. -->
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script>
+  // This page is the OAuth redirect target for ledgr's Plaid Link flow.
+  // After the bank redirects here, we get the link token from the main window
+  // via postMessage, then reinitialize Plaid Link to complete the handshake.
+
+  var params = new URLSearchParams(window.location.search);
+
+  if (!params.get('oauth_state_id')) {
+    document.querySelector('strong').textContent = 'Nothing to do here.';
+    document.querySelector('p').textContent = 'This page is only used during bank account linking.';
+  } else if (!window.opener) {
+    document.querySelector('strong').textContent = 'Pop-up was blocked.';
+    document.querySelector('p').textContent =
+      'Allow pop-ups for http://127.0.0.1 in your browser, then try linking again.';
+  } else {
+    var receivedUri = window.location.href;
+
+    // Ask the main ledgr window for the link token.
+    window.opener.postMessage({ type: 'ledgr_oauth_ready' }, '*');
+
+    window.addEventListener('message', function(e) {
+      if (!e.data || e.data.type !== 'ledgr_link_token' || !e.data.token) return;
+
+      var handler = window.Plaid.create({
+        token: e.data.token,
+        receivedRedirectUri: receivedUri,
+        onSuccess: function(publicToken) {
+          window.opener.postMessage(
+            { type: 'ledgr_oauth_success', public_token: publicToken },
+            '*'
+          );
+          window.close();
+        },
+        onExit: function() {
+          window.close();
+        }
+      });
+      handler.open();
+    }, { once: true });
+  }
+</script>
+</body>
+</html>
