@@ -44,18 +44,29 @@
     var receivedUri = window.location.href;
 
     // Ask the main ledgr window for the link token.
+    // '*' is unavoidable here: the local server uses a random OS-assigned port,
+    // so the exact opener origin (http://127.0.0.1:PORT) is unknown at build time.
+    // The listener below mitigates this by verifying e.source === window.opener
+    // and that the origin is a localhost address before acting on any message.
     window.opener.postMessage({ type: 'ledgr_oauth_ready' }, '*');
 
     window.addEventListener('message', function(e) {
+      // Only accept messages from the exact window that opened this popup.
+      if (e.source !== window.opener) return;
+      // Only accept messages from localhost (the ledgr CLI server).
+      if (!e.origin.startsWith('http://127.0.0.1:') && !e.origin.startsWith('http://localhost:')) return;
       if (!e.data || e.data.type !== 'ledgr_link_token' || !e.data.token) return;
+
+      var openerOrigin = e.origin;
 
       var handler = window.Plaid.create({
         token: e.data.token,
         receivedRedirectUri: receivedUri,
         onSuccess: function(publicToken) {
+          // Send the public token back to the specific opener origin now that we know it.
           window.opener.postMessage(
             { type: 'ledgr_oauth_success', public_token: publicToken },
-            '*'
+            openerOrigin
           );
           window.close();
         },
