@@ -1,17 +1,222 @@
+/* McGill Technologies
+   Design language: the preflight checklist.
+   Lists are the signature element. Numbered markers are used only where order
+   carries meaning (a real sequence); check markers are used for unordered sets. */
+
+:root {
+    --paper: #F4F3FB;
+    --card: #FFFFFF;
+    --ink: #14132B;
+    --slate: #56546F;
+    --indigo: #2F2AA4;
+    --indigo-deep: #1E1A78;
+    --rule: #DCDAF2;
+    --signal: #25D366;
+    --signal-deep: #20BD5A;
+
+    --display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --measure: 44rem;
+    --step: 0.25rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--body);
+    font-size: 1.0625rem;
     margin: 0;
     padding: 0;
-    background-color: #E6E6FA;
-    color: #111;
-    line-height: 1.5;
+    background-color: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 58rem;
     margin: 0 auto;
-    padding: 1rem;
-    text-align: center;
+    padding: 0 1.5rem 4rem;
+    text-align: left;
+}
+
+/* ---------------------------------------------------------------- masthead */
+
+header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin: 0 0 0.75rem;
+}
+
+h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 1.6rem + 2.6vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 0;
+    max-width: 20ch;
+}
+
+/* ------------------------------------------------------------------ layout */
+
+main {
+    max-width: var(--measure);
+}
+
+/* Reset first, so the flow rules below win at equal specificity. A `margin`
+   shorthand placed after them would silently zero out margin-top. */
+main p {
+    margin: 0;
+}
+
+main > * + *,
+main section > * + * {
+    margin-top: 1.25rem;
+}
+
+main h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 1.15rem + 1.1vw, 1.85rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 3rem 0 0;
+}
+
+main h2 + * {
+    margin-top: 0.85rem;
+}
+
+/* ---------------------------------------------------- signature: checklist */
+
+.checklist,
+.steps {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+}
+
+/* Markers are absolutely positioned rather than a grid column: a grid item is
+   created per child node, which would strand the text after </strong> in the
+   narrow marker column. */
+.checklist > li,
+.steps > li {
+    position: relative;
+    padding: 0.95rem 0 0.95rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    margin: 0;
+}
+
+.checklist > li::before,
+.steps > li::before {
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background-color: var(--card);
+    color: var(--indigo);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* unordered set: a check, no implied order */
+.checklist > li::before {
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%232F2AA4' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.95rem;
+}
+
+/* real sequence: numbered, order carries meaning */
+.steps {
+    counter-reset: step;
+}
+
+.steps > li {
+    counter-increment: step;
+}
+
+.steps > li::before {
+    content: counter(step, decimal-leading-zero);
+}
+
+.checklist strong,
+.steps strong {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+/* --------------------------------------------------------- spec rows (stack) */
+
+.spec {
+    position: relative;
+    padding: 0.7rem 0 0.7rem 9.5rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: none;
+}
+
+.spec:first-of-type {
+    border-top: 1px solid var(--rule);
+}
+
+.spec strong {
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+}
+
+/* ------------------------------------------------------------------ figure */
+
+figure {
+    margin: 0;
+}
+
+figure img {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--card);
+}
+
+figcaption {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    line-height: 1.5;
+    color: var(--slate);
+    margin-top: 0.6rem;
+    max-width: 42ch;
 }
 
 img {
@@ -19,13 +224,96 @@ img {
     height: auto;
 }
 
+main > a > img {
+    max-width: 8.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+}
+
+/* -------------------------------------------------------------------- nav */
+
+.site-nav {
+    margin-top: 1.5rem;
+}
+
+.site-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding: 0;
+    margin: 0;
+}
+
+.site-nav a {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--slate);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+    color: var(--indigo);
+    border-bottom-color: var(--indigo);
+}
+
+/* ------------------------------------------------------------------ links */
+
 a {
-    color: #2f2aa4;
+    color: var(--indigo);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
 }
 
 a:hover {
-    color: #1e1a78;
+    color: var(--indigo-deep);
 }
+
+/* ---------------------------------------------------------------- buttons */
+
+.whatsapp-button {
+    display: inline-block;
+    background-color: var(--signal);
+    color: #fff;
+    padding: 0.75rem 1.35rem;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    transition: background-color 0.2s ease;
+}
+
+.whatsapp-button:hover,
+.whatsapp-button:focus-visible {
+    background-color: var(--signal-deep);
+    text-decoration: none;
+    color: #fff;
+}
+
+/* ----------------------------------------------------------------- footer */
+
+footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* -------------------------------------------------------------- a11y bits */
 
 .skip-link {
     position: absolute;
@@ -44,12 +332,12 @@ a:hover {
     padding: 0.5rem;
     margin: 0.5rem;
     display: inline-block;
-    background: #fff;
-    border: 2px solid #2f2aa4;
+    background: var(--card);
+    border: 2px solid var(--indigo);
 }
 
 :focus-visible {
-    outline: 3px solid #2f2aa4;
+    outline: 3px solid var(--indigo);
     outline-offset: 2px;
 }
 
@@ -70,45 +358,51 @@ a:hover {
     direction: rtl;
 }
 
-.site-nav {
-    margin-bottom: 1rem;
-}
-
-.site-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    padding: 0;
-    margin: 0;
-}
-
-.site-nav a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.whatsapp-button {
-    display: inline-block;
-    background-color: #25D366;
-    color: white;
-    padding: 12px 20px;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    margin: 10px 0;
-    transition: background-color 0.3s ease;
-}
-
-.whatsapp-button:hover,
-.whatsapp-button:focus-visible {
-    background-color: #20BD5A;
-    text-decoration: none;
-    color: white;
-}
-
 .inline-auth-input {
     display: inline;
     width: auto;
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 34rem) {
+    .container {
+        padding: 0 1.15rem 3rem;
+    }
+
+    header {
+        padding: 2rem 0 1.5rem;
+    }
+
+    .spec {
+        padding-left: 0;
+        padding-top: 2.1rem;
+    }
+
+    .spec strong {
+        top: 0.7rem;
+    }
+
+    .checklist > li,
+    .steps > li {
+        padding-left: 2.4rem;
+    }
+
+    .checklist > li::before,
+    .steps > li::before {
+        width: 1.7rem;
+        height: 1.7rem;
+        font-size: 0.62rem;
+        background-size: 0.8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }

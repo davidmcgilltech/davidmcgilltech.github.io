@@ -4,7 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carpet Cleaning Estimate - McGill Technologies</title>
+  <meta name="description" content="An instant carpet cleaning quote tool that prices rooms, stairs, and travel from a street address. Built by McGill Technologies in Oklahoma City.">
+  <link rel="canonical" href="https://davidmcgill.tech/estimate/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap">
   <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": "https://davidmcgill.tech/estimate/#app",
+    "url": "https://davidmcgill.tech/estimate/",
+    "name": "Carpet Cleaning Estimate Calculator",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "description": "Instant carpet cleaning quote tool that prices rooms, stairs, hallways, and travel cost from a customer address.",
+    "author": {
+      "@type": "Organization",
+      "name": "McGill Technologies",
+      "@id": "https://davidmcgill.tech/#business"
+    }
+  }
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65945589-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,8 +35,12 @@
     gtag('config', 'UA-65945589-1');
   </script>
   <style>
+    /* the estimator form needs the full container, not the reading measure */
+    main {
+      max-width: none;
+    }
     .page-header {
-      text-align: center;
+      text-align: left;
       margin-bottom: 1.5rem;
     }
     .page-header h1 {
@@ -283,6 +309,19 @@
           </section>
         </section>
       </div>
+
+      <section aria-labelledby="about-tool-heading">
+        <h2 id="about-tool-heading">How this estimate is calculated</h2>
+        <p>The tool prices four things and adds them together. Room count, stairs, and hallway or entry areas are each charged at their own rate, because a flight of stairs takes far longer per square foot than an open living room does. Total home square footage adjusts the cleaning time. Travel is calculated from the customer address using driving distance, the current gas price, and the van's fuel economy, so a job forty minutes out of town does not get quoted at the same number as one down the street.</p>
+        <p>Change any input and recalculate. The breakdown shows every component separately rather than a single number, which means you can explain the price to the customer line by line instead of asking them to trust it.</p>
+
+        <h2>Why a contractor would want this</h2>
+        <p>Quoting from memory produces two failure modes, and both cost money. Quote too high and you lose the job to whoever answered the phone with a real number. Quote too low and you drive out, do the work, and discover the travel ate the margin. A calculator removes the guessing and makes every quote consistent, whether the owner or a new hire is the one giving it.</p>
+
+        <h2>This is an example of what I build</h2>
+        <p>This tool was built for a service contractor who was quoting jobs from memory over the phone. It runs entirely in the browser, costs nothing per month to operate, and belongs to the business it was built for.</p>
+        <p>If your business runs on a spreadsheet, a whiteboard, or a subscription that almost fits, the same approach applies. <a href="../">See what McGill Technologies builds</a> and tell me what you are quoting today.</p>
+      </section>
     </main>
 
     <footer>

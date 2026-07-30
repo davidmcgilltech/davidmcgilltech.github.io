@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>David McGill Technologies - Resume</title>
+  <title>Experience &amp; Stack | David McGill, OKC Developer</title>
+  <meta name="description" content="What David McGill builds and the tools he builds it with: web applications, iOS apps, integrations, and test automation for Oklahoma City small businesses.">
+  <link rel="canonical" href="https://davidmcgill.tech/resume/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65945589-1"></script>
   <script>
@@ -12,12 +17,44 @@
     gtag('js', new Date());
     gtag('config', 'UA-65945589-1');
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": "https://davidmcgill.tech/resume/#page",
+    "url": "https://davidmcgill.tech/resume/",
+    "name": "Experience and Stack",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "David McGill",
+      "jobTitle": "Software Consultant",
+      "url": "https://davidmcgill.tech/",
+      "email": "dmcgill50@gmail.com",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "McGill Technologies",
+        "@id": "https://davidmcgill.tech/#business"
+      },
+      "knowsAbout": [
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Python",
+        "Swift",
+        "PostgreSQL",
+        "Cloudflare Workers",
+        "Test automation"
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="container">
     <header>
-      <h1>Welcome to McGill Technologies - Resume</h1>
+      <p class="eyebrow">McGill Technologies</p>
+      <h1>Experience and Stack</h1>
       <nav class="site-nav" aria-label="Page">
         <ul>
           <li><a href="../">Home</a></li>
@@ -25,8 +62,37 @@
       </nav>
     </header>
     <main id="main-content">
-      <p>Resume content will be added here.</p>
+      <p>A resume that lists job titles tells you where someone sat. This page tells you what I have actually shipped and what I built it with, which is the part that matters when you are deciding whether to hire me.</p>
+
+      <h2>Systems I have built</h2>
+      <ul class="checklist" role="list">
+        <li><strong>Multi-tenant SaaS platforms.</strong> Organizations sign up, invite their own users under role-based permissions, and see only their own data. Includes payment processing, automated messaging, and live reporting dashboards.</li>
+        <li><strong>Field operations tools.</strong> Job orders, vehicle and asset tracking, crew scheduling, and assignment workflows for contractors whose staff work away from a desk all day.</li>
+        <li><strong>Native iOS applications.</strong> Swift and SwiftUI apps for teams that record structured observations in the field, including audio capture, transcription, and evaluation against a scoring framework.</li>
+        <li><strong>Document generation pipelines.</strong> Systems that extract structured data out of PDFs and rate tables and produce branded, client-ready documents from it.</li>
+        <li><strong>Voice and email agents.</strong> Inbound call and email handling that connects to the ticketing systems a helpdesk already runs on.</li>
+        <li><strong>Public websites with an owner-controlled admin.</strong> Schedules, rosters, sponsors, and content the client edits themselves, with no monthly platform fee.</li>
+      </ul>
+
+      <h2>Tools I use</h2>
+      <p class="spec"><strong>Frontend:</strong> TypeScript, React, Next.js, Tailwind CSS, server-rendered HTML where a framework is not warranted.</p>
+      <p class="spec"><strong>Backend:</strong> Python with FastAPI, Node and TypeScript, .NET, PostgreSQL, Supabase, Cloudflare Workers and D1.</p>
+      <p class="spec"><strong>Mobile:</strong> Swift and SwiftUI, distributed through TestFlight and the App Store.</p>
+      <p class="spec"><strong>Integrations:</strong> Stripe for payments, Twilio for SMS and voice, Microsoft Graph, and the REST APIs of whatever CRM or ticketing system the client already pays for.</p>
+      <p class="spec"><strong>Testing:</strong> Playwright for browser automation, pytest and unit suites, and continuous integration that runs the whole suite on every change.</p>
+
+      <h2>The quality assurance half</h2>
+      <p>I work in quality assurance on high-traffic sports media properties. The job is finding the exact way a release breaks before millions of people find it instead. That background is why my projects ship with real test coverage rather than a promise of it, and why I am more interested in what happens when your network drops mid-form than in how the happy path looks in a demo.</p>
+
+      <h2>How I work with clients</h2>
+      <p>Fixed fee, quoted before work starts. Payment by milestone, so you see working software before the next invoice. Full ownership at handoff, including source code, database, and hosting accounts. A defined support window after launch. If a project is a bad idea, or too small to be worth paying me for, I will tell you that instead of taking the work.</p>
+
+      <p><a href="../">Back to McGill Technologies</a> or reach me on <a href="https://wa.me/14056285297" target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>
     </main>
+
+    <footer>
+      <p>&copy; McGill Technologies</p>
+    </footer>
   </div>
 </body>
 </html>
