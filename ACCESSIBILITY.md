@@ -8,7 +8,6 @@ This accessibility baseline applies to all public pages:
 - `/pics.html`
 - `/blog/index.html`
 - `/resume/index.html`
-- `/estimate/index.html`
 - `/email.html`
 
 Target conformance level: **WCAG 2.2 AA**.
@@ -36,7 +35,7 @@ Manual keyboard and screen-reader checks were run for:
 - visible focus indicator and tab navigation
 - form labels and error messaging
 - descriptive link text and image alternatives
-- dynamic update announcements in estimator and auth status areas
+- dynamic update announcements in auth status areas
 
 ## Prioritized issue backlog
 
@@ -46,7 +45,7 @@ Manual keyboard and screen-reader checks were run for:
 
 ### Major
 
-- Third-party widgets (PayPal/Google Maps/Firebase SDK UI behavior) still depend on external scripts and should be manually re-verified with assistive technology after vendor updates.
+- Third-party widgets (PayPal/Firebase SDK UI behavior) still depend on external scripts and should be manually re-verified with assistive technology after vendor updates.
 
 ### Minor
 
@@ -59,8 +58,7 @@ Before release:
 
 1. Run `npm test`.
 2. Verify keyboard-only navigation across all scoped pages.
-3. Verify estimator result and error announcements with a screen reader.
-4. Confirm third-party embedded flows are reachable and operable.
+3. Confirm third-party embedded flows are reachable and operable.
 
 ## Accessibility changelog
 

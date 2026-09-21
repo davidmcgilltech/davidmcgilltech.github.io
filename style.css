@@ -80,9 +80,10 @@ main {
     max-width: var(--measure);
 }
 
-/* Reset first, so the flow rules below win at equal specificity. A `margin`
-   shorthand placed after them would silently zero out margin-top. */
-main p {
+/* Reset first, at zero specificity via :where(). The universal selectors in
+   the flow rules below add no specificity, so a plain `main p` would outrank
+   them and collapse the gap between consecutive paragraphs. */
+:where(main p) {
     margin: 0;
 }
 
@@ -184,6 +185,11 @@ main h2 + * {
 
 .spec:first-of-type {
     border-top: 1px solid var(--rule);
+}
+
+/* rows stack flush; the rule between them is the separator */
+.spec + .spec {
+    margin-top: 0;
 }
 
 .spec strong {
