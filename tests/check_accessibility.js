@@ -8,6 +8,7 @@ const pages = [
   'blog/index.html',
   'resume/index.html',
   'estimate/index.html',
+  'workshop/index.html',
   'email.html'
 ];
 
