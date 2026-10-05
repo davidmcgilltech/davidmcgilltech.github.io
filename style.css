@@ -13,6 +13,8 @@
     --rule: #DCDAF2;
     --signal: #25D366;
     --signal-deep: #20BD5A;
+    --danger: #A4262C;
+    --ok: #1B6E3C;
 
     --display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
     --body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
@@ -301,6 +303,188 @@ a:hover {
     background-color: var(--signal-deep);
     text-decoration: none;
     color: #fff;
+}
+
+.button {
+    display: inline-block;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--indigo);
+    border: 0;
+    border-radius: 999px;
+    padding: 0.75rem 1.35rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+    background-color: var(--indigo-deep);
+}
+
+.button[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+}
+
+/* ------------------------------------------------------------------ forms */
+
+.site-form > * + * {
+    margin-top: 1.1rem;
+}
+
+.field {
+    display: block;
+    border: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+.field > label,
+.field > legend {
+    display: block;
+    padding: 0;
+    margin: 0 0 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+}
+
+.site-form input[type="text"],
+.site-form input[type="email"],
+.site-form textarea {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.65rem 0.75rem;
+}
+
+.site-form textarea {
+    resize: vertical;
+}
+
+.site-form input:hover,
+.site-form textarea:hover {
+    border-color: var(--slate);
+}
+
+.site-form [aria-invalid] {
+    border-color: var(--danger);
+}
+
+.choices label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.3rem 0;
+}
+
+.choices input {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--indigo);
+}
+
+/* Honeypot: off-screen for people, present for bots. Not display:none, which
+   some bots skip. */
+.hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.turnstile-slot:empty {
+    display: none;
+}
+
+.notice {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--indigo);
+    border-radius: 3px;
+    background: var(--card);
+    padding: 0.85rem 1rem;
+}
+
+.notice:empty {
+    display: none;
+}
+
+.notice.error {
+    border-left-color: var(--danger);
+    color: var(--danger);
+}
+
+.notice.ok {
+    border-left-color: var(--ok);
+}
+
+.notice.done strong {
+    font-family: var(--display);
+    font-size: 1.2rem;
+}
+
+.notice.done p {
+    margin-top: 0.35rem;
+}
+
+/* ------------------------------------------------- signature: the seat row */
+
+/* One checklist box per seat: empty is open, checked is taken, green is the
+   seat the visitor just reserved. */
+.seat-row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.seat {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background-color: var(--card);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.95rem;
+}
+
+.seat.taken {
+    background-color: var(--indigo);
+    border-color: var(--indigo);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23FFFFFF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+}
+
+.seat.mine {
+    background-color: var(--ok);
+    border-color: var(--ok);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23FFFFFF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+    animation: seat-claimed 0.5s ease-out;
+}
+
+@keyframes seat-claimed {
+    0% { transform: scale(0.6); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.seat-count {
+    margin-top: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--slate);
 }
 
 /* ----------------------------------------------------------------- footer */

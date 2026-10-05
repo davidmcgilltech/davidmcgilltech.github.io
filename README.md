@@ -8,6 +8,14 @@ Recent updates removed leftover merge conflict markers that appeared on the live
 
 Accessibility standards, audit scope, baseline backlog, and sign-off steps are documented in [`ACCESSIBILITY.md`](./ACCESSIBILITY.md).
 
+## Contact and reservation forms
+
+The site publishes no email address. The contact form on the homepage and the seat reservation form on `/workshop/` are submitted by `assets/forms.js` to the workshop hub at `https://learn.davidmcgill.tech` (repo `davidmcgilltech/davidmcgill-learn`), which verifies Turnstile and emails the message on. `tests/check_contact.js` fails if any page gains a `mailto:` link or a literal address.
+
+Two values in `assets/forms.js` tie the site to that app: `API_BASE` and `TURNSTILE_SITE_KEY` (the public site key of the Turnstile widget for `davidmcgill.tech`). The hub must list `https://davidmcgill.tech` in its `SITE_ORIGINS`.
+
+To try the forms locally, run the hub (`npm run dev` in `davidmcgill-learn`, port 8787) and serve this repo on port 4000 (`python3 -m http.server 4000`). On `localhost` the script targets the local hub and Cloudflare's always-pass Turnstile test key.
+
 ## SEO conventions
 
 `sitemap.xml` at the repo root lists every public URL. Add new pages to it.
