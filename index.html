@@ -25,7 +25,6 @@
     "@id": "https://davidmcgill.tech/#business",
     "name": "McGill Technologies",
     "url": "https://davidmcgill.tech/",
-    "email": "dmcgill50@gmail.com",
     "telephone": "+1-405-628-5297",
     "areaServed": {
       "@type": "City",
@@ -94,19 +93,45 @@
 
       <p>Renting software costs you every month and leaves you with nothing. Buying it once costs more on day one and leaves you with an asset. That is the whole pitch.</p>
 
-      <h2>Start a project</h2>
+      <h2 id="contact">Start a project</h2>
       <p>Tell me what the problem is and what you are paying for it now. If I am not the right fit, I will say so.</p>
+
+      <form class="site-form" id="contact-form" novalidate data-form="contact">
+        <div class="field">
+          <label for="contact-name">Your name</label>
+          <input type="text" id="contact-name" name="name" autocomplete="name" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="contact-email">Email address</label>
+          <input type="email" id="contact-email" name="email" autocomplete="email" maxlength="254" required>
+        </div>
+        <div class="field">
+          <label for="contact-message">What is the problem, and what does it cost you now?</label>
+          <textarea id="contact-message" name="message" rows="6" maxlength="4000" required></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="contact-website">Leave this field empty</label>
+          <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="turnstile-slot" data-turnstile></div>
+        <p><button type="submit" class="button">Send message</button></p>
+        <p class="notice" role="status" aria-live="polite" data-status></p>
+      </form>
+      <noscript>
+        <p class="notice">The contact form needs JavaScript. Message me on WhatsApp instead.</p>
+      </noscript>
+
+      <p>Prefer chat?</p>
       <p>
         <a href="https://wa.me/14056285297" class="whatsapp-button" target="_blank" rel="noopener noreferrer" aria-label="Contact McGill Technologies on WhatsApp">📱 Contact via WhatsApp</a>
       </p>
-      <p><a href="mailto:dmcgill50@gmail.com">dmcgill50@gmail.com</a></p>
 
       <h2>Learn to use AI in your own business</h2>
       <p>Not every problem needs custom software. <a href="workshop/">AI Workflows for Small Business Owners</a> is a hands-on, three-hour workshop where you build AI workflows for your own follow-up, proposals, and routine admin. The pilot group is $99 per person.</p>
 
       <section aria-labelledby="paypal-support-heading">
         <h2 id="paypal-support-heading">Support</h2>
-        <p>If the payment widget does not load, contact us by email for payment options.</p>
+        <p>If the payment widget does not load, <a href="#contact">send me a message</a> for payment options.</p>
         <div id="paypal-button" role="region" aria-label="PayPal payment button"></div>
       </section>
     </main>
@@ -117,8 +142,10 @@
   </div>
 
   <noscript>
-    <p>This website works best with JavaScript enabled. Contact us at <a href="mailto:dmcgill50@gmail.com">dmcgill50@gmail.com</a> if any interactive feature is unavailable.</p>
+    <p>This website works best with JavaScript enabled. <a href="https://wa.me/14056285297">Message me on WhatsApp</a> if any interactive feature is unavailable.</p>
   </noscript>
+
+  <script type="module" src="assets/forms.js"></script>
 
   <script>
     var _dcq = _dcq || [];

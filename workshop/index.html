@@ -101,18 +101,64 @@
       <h2>Why it is a pilot</h2>
       <p>This is the first group, and the price reflects that. In exchange for the lower rate I will ask you for honest feedback afterward: what was useful, what dragged, what you actually used the following week. That feedback shapes the full version.</p>
 
-      <h2>Reserve a seat</h2>
-      <p>Send me a message with your name, what your business does, and the one task you most want off your plate. I will reply with the date options and how to pay.</p>
+      <h2 id="reserve">Reserve a seat</h2>
+      <p>Hold your seat now and pay nothing yet. I will email you the date options, and the payment link once the date is fixed. You also get a private workshop hub where you send me your task list and pick up your templates afterward.</p>
+
+      <div class="seats" data-seats hidden>
+        <ol class="seat-row" role="img" data-seat-row></ol>
+        <p class="seat-count" aria-live="polite" data-seat-count></p>
+      </div>
+
+      <form class="site-form" id="reserve-form" novalidate data-form="reserve" data-workshop="ai-workflows">
+        <div class="field">
+          <label for="reserve-name">Your name</label>
+          <input type="text" id="reserve-name" name="name" autocomplete="name" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="reserve-email">Email address</label>
+          <input type="email" id="reserve-email" name="email" autocomplete="email" maxlength="254" required>
+        </div>
+        <div class="field">
+          <label for="reserve-business">What does your business do?</label>
+          <input type="text" id="reserve-business" name="business" autocomplete="organization" maxlength="200" required>
+        </div>
+        <div class="field">
+          <label for="reserve-task">The one task you most want off your plate</label>
+          <textarea id="reserve-task" name="task" rows="3" maxlength="1000" required></textarea>
+        </div>
+        <div class="field">
+          <label for="reserve-availability">Which weekdays or evenings work for you?</label>
+          <input type="text" id="reserve-availability" name="availability" maxlength="500" required>
+        </div>
+        <fieldset class="field choices">
+          <legend>How would you rather attend?</legend>
+          <label><input type="radio" name="format" value="in_person"> In person, OKC metro</label>
+          <label><input type="radio" name="format" value="zoom"> Zoom</label>
+          <label><input type="radio" name="format" value="either" checked> Either works</label>
+        </fieldset>
+        <div class="hp" aria-hidden="true">
+          <label for="reserve-website">Leave this field empty</label>
+          <input type="text" id="reserve-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="turnstile-slot" data-turnstile></div>
+        <p><button type="submit" class="button" data-submit>Hold my seat</button></p>
+        <p class="notice" role="status" aria-live="polite" data-status></p>
+      </form>
+      <noscript>
+        <p class="notice">The reservation form needs JavaScript. Message me on WhatsApp instead and I will hold a seat for you.</p>
+      </noscript>
+
+      <p>Prefer chat?</p>
       <p>
         <a href="https://wa.me/14056285297?text=I%27d%20like%20a%20seat%20in%20the%20AI%20workshop." class="whatsapp-button" target="_blank" rel="noopener noreferrer" aria-label="Reserve a workshop seat on WhatsApp">📱 Reserve a seat via WhatsApp</a>
       </p>
-      <p><a href="mailto:dmcgill50@gmail.com?subject=AI%20workshop%20seat">dmcgill50@gmail.com</a></p>
-      <p>Want this for your whole team instead? I can run the same session privately for a single business, with every example drawn from your own operations. <a href="mailto:dmcgill50@gmail.com?subject=Private%20AI%20workshop%20for%20my%20team">Ask about a private session</a>.</p>
+      <p>Want this for your whole team instead? I can run the same session privately for a single business, with every example drawn from your own operations. <a href="../#contact">Ask about a private session</a>.</p>
     </main>
 
     <footer>
       <p>&copy; McGill Technologies</p>
     </footer>
   </div>
+  <script type="module" src="../assets/forms.js"></script>
 </body>
 </html>
