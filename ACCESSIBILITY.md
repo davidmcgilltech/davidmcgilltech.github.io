@@ -70,3 +70,4 @@ Before release:
 - Added polite/assertive live regions for dynamic status and error updates.
 - Added repeatable CI accessibility checks.
 - Added the contact and seat reservation forms: labelled fields, `aria-invalid` plus focus on the first invalid field, polite status regions, focus moved to the confirmation on success, and a seat row exposed as a single labelled image with the count repeated as text.
+- Raised non-text contrast: form fields, seat boxes, checklist markers and notices now use a 3.6:1+ border (`--edge`); hairline `--rule` is kept for separators only. WhatsApp button moved to dark teal (white text 7.7:1, was 2.0:1). Smallest mono labels raised to 0.78rem. Seat row is a `div[role=img]` rather than a list, which axe had flagged. All pages pass axe-core 4.10 with zero violations.

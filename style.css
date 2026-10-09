@@ -10,9 +10,15 @@
     --slate: #56546F;
     --indigo: #2F2AA4;
     --indigo-deep: #1E1A78;
+    /* --rule is a hairline separator only. Anything a user must perceive as a
+       boundary (inputs, markers, seats, notices) uses --edge: 3.95:1 on the
+       card and 3.59:1 on paper, meeting WCAG 1.4.11 for non-text contrast. */
     --rule: #DCDAF2;
-    --signal: #25D366;
-    --signal-deep: #20BD5A;
+    --edge: #7F7D9C;
+    --placeholder: #6B6983;
+    /* WhatsApp's dark teal: white text reaches 7.67:1 (the bright green was 1.98:1). */
+    --signal: #075E54;
+    --signal-deep: #064E46;
     --danger: #A4262C;
     --ok: #1B6E3C;
 
@@ -58,7 +64,7 @@ header {
 
 .eyebrow {
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -138,7 +144,7 @@ main h2 + * {
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-radius: 3px;
     background-color: var(--card);
     color: var(--indigo);
@@ -199,7 +205,7 @@ main h2 + * {
     left: 0;
     top: 0.95rem;
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -213,14 +219,14 @@ figure {
 }
 
 figure img {
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-radius: 3px;
     background: var(--card);
 }
 
 figcaption {
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     line-height: 1.5;
     color: var(--slate);
     margin-top: 0.6rem;
@@ -234,7 +240,7 @@ img {
 
 main > a > img {
     max-width: 8.5rem;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-radius: 3px;
 }
 
@@ -347,7 +353,7 @@ a:hover {
     padding: 0;
     margin: 0 0 0.4rem;
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -361,13 +367,18 @@ a:hover {
     font: inherit;
     color: var(--ink);
     background: var(--card);
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-radius: 3px;
     padding: 0.65rem 0.75rem;
 }
 
 .site-form textarea {
     resize: vertical;
+}
+
+.site-form ::placeholder {
+    color: var(--placeholder);
+    opacity: 1;
 }
 
 .site-form input:hover,
@@ -407,7 +418,7 @@ a:hover {
 }
 
 .notice {
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-left: 3px solid var(--indigo);
     border-radius: 3px;
     background: var(--card);
@@ -441,7 +452,6 @@ a:hover {
 /* One checklist box per seat: empty is open, checked is taken, green is the
    seat the visitor just reserved. */
 .seat-row {
-    list-style: none;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -452,7 +462,7 @@ a:hover {
 .seat {
     width: 2rem;
     height: 2rem;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--edge);
     border-radius: 3px;
     background-color: var(--card);
     background-repeat: no-repeat;
@@ -494,7 +504,7 @@ footer {
     padding-top: 1.5rem;
     border-top: 1px solid var(--rule);
     font-family: var(--mono);
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     letter-spacing: 0.06em;
     color: var(--slate);
 }

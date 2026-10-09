@@ -71,7 +71,7 @@ function drawSeats({ seatsTotal, seatsLeft }, mine = -1) {
   const taken = seatsTotal - seatsLeft;
   seatRow.replaceChildren(
     ...Array.from({ length: seatsTotal }, (_, i) => {
-      const seat = document.createElement("li");
+      const seat = document.createElement("span");
       seat.className = i === mine ? "seat mine" : i < taken ? "seat taken" : "seat";
       return seat;
     }),
